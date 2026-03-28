@@ -10,35 +10,22 @@ on:
 
 jobs:
   continuous-delivery:
-
     runs-on: ubuntu-latest
-
     env:
-      GEMS_PATH: ~/vendor/bundle
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true   # 临时解决 Node 20 警告
+      JEKYLL_ENV: production
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # for posts's lastmod
+          fetch-depth: 0
 
       - name: Setup Ruby
-        uses: actions/setup-ruby@v1
+        uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.7
-
-      - name: Bundle Caching
-        uses: actions/cache@v4
-        with:
-          path: ${{ env.GEMS_PATH }}
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
-
-      - name: Bundle Install
-        run: |
-          bundle config path ${{ env.GEMS_PATH }}
-          bundle install --jobs 4 --retry 3
+          ruby-version: 3.2
+          bundler-cache: true
 
       - name: Check baseurl
         run: |
@@ -48,13 +35,9 @@ jobs:
           fi
 
       - name: Build Site
-        env:
-          JEKYLL_ENV: production
         run: |
           bundle exec jekyll b
-
           if [[ -n $SPEC_TEST ]]; then
-            # Bypass the defects of htmlproofer
             bundle exec jekyll b -b "" -d "$SPEC_TEST"
           fi
 
