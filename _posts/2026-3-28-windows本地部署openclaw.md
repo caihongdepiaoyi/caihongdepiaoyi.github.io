@@ -47,7 +47,7 @@
     Create a default Unix user account: administrator
     ```
     弹出配置窗口：
-    ![alt text](image.png)
+    ![配置窗口](./image.png)
     如何在windows上访问wsl中文件：
     ```
     \\wsl.localhost\
@@ -56,7 +56,7 @@
     ```
     cd /mnt/c
     ```
-    ![alt text](image-1.png)
+    ![跨系统文件访问](./image-1.png)
 
 
 2. 启动并更新发行版：sudo apt update && sudo apt upgrade。
