@@ -9,7 +9,7 @@
 # --------------------------
 title: 随笔                          # the main title
 
-tagline: 研二-模糊测试-learning  # it will display as the sub-title
+tagline: learning  # it will display as the sub-title
 
 description: >-                        # used by seo meta and the atom feed
   A minimal, portfolio, sidebar,
